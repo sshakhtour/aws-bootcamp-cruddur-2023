@@ -40,7 +40,7 @@ We'll also run these commands indivually to perform the install manually
 
 ### Create a new User and Generate AWS Credentials
 
-- Go to (IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) andrew create a new user
+- Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) create a new user
 - `Enable console access` for the user
 - Create a new `Admin` Group and apply `AdministratorAccess`
 - Create the user and go find and click into the user
@@ -73,9 +73,9 @@ aws sts get-caller-identity
 You should see something like this:
 ```json
 {
-    "UserId": "AIFBZRJIQN2ONP4ET4EK4",
-    "Account": "655602346534",
-    "Arn": "arn:aws:iam::655602346534:user/andrewcloudcamp"
+    "UserId": "[UserID]",
+    "Account": "[Account]",
+    "Arn": "arn:aws:iam::[account_id]:user/[user]"
 }
 ```
 
