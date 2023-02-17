@@ -14,11 +14,30 @@
 
 [Lucid Charts Logical Diagram Share Link](https://lucid.app/lucidchart/4dde6345-af3f-4100-ab6a-fc4c634871a5/edit?viewport_loc=-319%2C30%2C2560%2C1100%2C0_0&invitationId=inv_c42b5846-0bf8-4d99-9248-154bfaf62673)
 
+### Create Admin User
+
+I created Admin user called sushakht from AWS Console IAM with permission AdministratorAccess by following these steps:
+
+- Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) create a new user
+- `Enable console access` for the user
+- Create a new `Admin` Group and apply `AdministratorAccess`
+
+![Admin User](assets/aws-admin-user.png)
+
+### Generate AWS Credentials
+
+- Find the user from Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) then click into the user
+- Click on `Security Credentials` and `Create Access Key`
+- Choose AWS CLI Access
+- Download the CSV with the credentials to use them in the next steps
+
+![Access Key](assets/aws-credentials.png)
+
 ### Install AWS CLI
 
 - We are going to install the AWS CLI when our Gitpod enviroment lanuches.
 - We are are going to set AWS CLI to use partial autoprompt mode to make it easier to debug CLI commands.
-- The bash commands we are using are the same as the [AWS CLI Install Instructions]https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+- The bash commands we are using are the same as the [AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 
 Update our `.gitpod.yml` to include the following task.
@@ -38,30 +57,20 @@ tasks:
 
 We'll also run these commands indivually to perform the install manually
 
-### Create a new User and Generate AWS Credentials
-
-- Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) create a new user
-- `Enable console access` for the user
-- Create a new `Admin` Group and apply `AdministratorAccess`
-- Create the user and go find and click into the user
-- Click on `Security Credentials` and `Create Access Key`
-- Choose AWS CLI Access
-- Download the CSV with the credentials
-
 ### Set Env Vars
 
 We will set these credentials for the current bash terminal
 ```
 export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
-export AWS_DEFAULT_REGION=us-east-1
+export AWS_DEFAULT_REGION=""
 ```
 
 We'll tell Gitpod to remember these credentials if we relaunch our workspaces
 ```
 gp env AWS_ACCESS_KEY_ID=""
 gp env AWS_SECRET_ACCESS_KEY=""
-gp env AWS_DEFAULT_REGION=us-east-1
+gp env AWS_DEFAULT_REGION=""
 ```
 
 ### Check that the AWS CLI is working and you are the expected user
@@ -78,6 +87,10 @@ You should see something like this:
     "Arn": "arn:aws:iam::[account_id]:user/[user]"
 }
 ```
+
+Below is the output
+
+![AWS installation](assets/aws-cli-installation.png)
 
 ## Enable Billing 
 
@@ -123,6 +136,9 @@ Check your email and confirm the subscription
 ```sh
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
+To validate creationg of alarm, from aws counsole search for [CloudWatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#alarmsV2:?) from there you should see the created alarm
+
+![AWS Alarm Creation](assets/aws-alarm-creation.png)
 
 ## Create an AWS Budget
 
@@ -142,3 +158,8 @@ aws budgets create-budget \
     --account-id AccountID \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
+```
+To validate creation of budget, from aws console search for [AWS Budgett](https://us-east-1.console.aws.amazon.com/billing/home?region=us-east-1#/budgets/overview) below is the prove of budget creation
+
+![AWS Budget Creation](assets/aws-budget-creation.png)
+
